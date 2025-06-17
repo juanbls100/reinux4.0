@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reinux - Potencia tu Talento en la Era Digital</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins e Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Configuración personalizada para Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'petroleo': '#007C80',
+                        'petroleo-claro': '#00999D', /* Nuevo color para el título */
+                        'gris-oscuro': '#1F2E35',
+                        'gris-azulado': '#6CA6B2',
+                        'gris-claro': '#F1F3F4',
+                        'celeste-pastel': '#8EE3FD'
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif']
+                    },
+                    spacing: {
+                        'navbar-height': '4rem', /* Altura de la barra de navegación fija ajustada */
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Elimina márgenes y rellenos predeterminados del navegador */
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilo base para transiciones suaves de los elementos desplegables (FAQ) */
+        .collapsible-answer {
+            transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out, padding-top 0.5s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding-top: 0;
+        }
+        .collapsible-answer.open {
+            max-height: 9999px; /* Un valor grande para permitir contenido dinámico */
+            opacity: 1;
+            padding-top: 1rem; /* Padding para separar el contenido del título */
+        }
+        .collapsible-arrow {
+            transition: transform 0.3s ease-in-out;
+        }
+        .collapsible-arrow.rotated {
+            transform: rotate(180deg);
+        }
+
+        /* Ajustes para el contenedor de la imagen de encabezado */
+        .header-bg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Asegura que la imagen no se desborde */
+            z-index: 0; /* Coloca la imagen de fondo */
+        }
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.05); /* Capa oscura semitransparente - Opacidad reducida */
+            z-index: 1; /* Encima de la imagen */
+        }
+        .header-content {
+            position: relative;
+            z-index: 2; /* Encima de la capa oscura */
+            padding-top: theme('spacing.navbar-height'); /* Ajusta el padding para la barra fija */
+        }
+
+        /* Estilos específicos para los cuadrantes de las semanas (ahora fijos y con hover) */
+        .week-card {
+            transition: all 0.3s ease-in-out;
+            border: 1px solid #e2e8f0; /* Default border */
+        }
+        .week-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Más sombra al pasar el cursor */
+            transform: scale(1.02); /* Ligeramente más grande al pasar el cursor */
+            border-color: #007C80; /* Color Petroleo para el borde activo */
+        }
+
+        /* Alineación y espaciado de los títulos y contenido de las semanas */
+        .week-card-inner {
+            padding: 1.5rem; /* Ajusta el relleno interno para espacio superior */
+            text-align: left; /* Alinea el texto a la izquierda */
+        }
+        .week-card-inner h4 {
+            margin-top: 0.5rem; /* Espacio entre p y h4 */
+        }
+        .week-icon-container {
+            text-align: center; /* Centra el icono */
+            margin-bottom: 1rem; /* Espacio debajo del icono */
+        }
+    </style>
+</head>
+<body class="bg-white font-inter text-gris-oscuro antialiased">
+
+    <!-- Barra de Navegación Fija Superior -->
+    <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-50 py-2 px-6 md:px-12 flex justify-between items-center">
+        <!-- Logo en la barra fija -->
+        <img src="https://github.com/juanbls100/reinuxV3.0/blob/main/Logo%20horizontal%20fondo%20transparente.png?raw=true" alt="Logo de Reinux" class="h-12 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/150x48/007C80/FFFFFF?text=Reinux';" />
+        
+        <!-- Navegación principal en la barra fija -->
+        <ul class="flex flex-wrap justify-center space-x-4 md:space-x-8 font-semibold">
+            <li><a href="#beneficios" class="text-gris-oscuro hover:text-celeste-pastel transition-all duration-200 transform hover:scale-105 inline-block py-2">Beneficios</a></li>
+            <li><a href="#contenido" class="text-gris-oscuro hover:text-celeste-pastel transition-all duration-200 transform hover:scale-105 inline-block py-2">Contenido</a></li>
+            <li><a href="#precio" class="text-gris-oscuro hover:text-celeste-pastel transition-all duration-200 transform hover:scale-105 inline-block py-2">Precio</a></li>
+            <li><a href="#contacto" class="text-gris-oscuro hover:text-celeste-pastel transition-all duration-200 transform hover:scale-105 inline-block py-2">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- 1. Encabezado - Contenido principal debajo de la barra fija -->
+    <header id="inicio" class="relative min-h-[500px] flex items-center justify-center text-white pt-navbar-height">
+        <!-- Contenedor de la imagen de fondo -->
+        <div class="header-bg-container">
+            <img src="https://github.com/juanbls100/reinuxV2.0/blob/main/Untitled%20(1000%20x%20500%20px)%20(2).png?raw=true" alt="Hombre maduro con laptop negra" class="w-full h-full object-cover object-center" onerror="this.onerror=null;this.src='https://placehold.co/1920x1080/6CA6B2/FFFFFF?text=Imagen+de+Encabezado';" />
+        </div>
+        <!-- Capa de oscurecimiento sobre la imagen -->
+        <div class="header-overlay"></div>
+
+        <!-- Contenido del encabezado -->
+        <div class="container mx-auto px-6 py-4 md:py-8 header-content">
+            
+            <div class="text-center pt-8 md:pt-12">
+                <h1 class="text-4xl md:text-6xl font-poppins font-bold leading-tight mb-4 text-petroleo-claro">
+                    Dale un giro digital a tu talento. <br class="hidden md:block"> Sin complicaciones.
+                </h1>
+                <p class="text-lg md:text-xl text-gris-azulado font-bold max-w-3xl mx-auto mb-8">
+                    Nuestro curso te lleva de la mano para que aproveches la tecnología a tu favor, con herramientas gratuitas y fáciles de usar.
+                </p>
+                <a href="#precio" class="bg-petroleo text-white font-bold font-poppins py-4 px-10 rounded-full inline-block shadow-lg hover:bg-opacity-90 transform hover:-translate-y-1 transition-all duration-300">
+                    Quiero inscribirme ahora
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 2. Sección de Identificación -->
+        <section id="para-ti" class="py-16 md:py-24">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-poppins font-bold mb-4">¿Este curso es para ti?</h2>
+                <p class="text-lg text-gris-azulado max-w-2xl mx-auto mb-12">Si respondes "sí" a alguna de estas preguntas, estás en el lugar correcto.</p>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Pregunta 1 con icono SVG y efecto hover -->
+                    <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300">
+                        <div class="text-petroleo mb-4 flex justify-center items-center">
+                            <!-- Icono de Velocidad/Progreso -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-10 w-10">
+                                <path d="M12 2c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zM11 11V7h2v4h4v2h-4v4h-2v-4H7v-2h4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-poppins font-semibold text-xl mb-2">¿Sientes que la tecnología avanza muy rápido?</h3>
+                        <p class="text-gris-azulado">Te ayudamos a ponerte al día y a ganar confianza en el entorno digital actual.</p>
+                    </div>
+                    <!-- Pregunta 2 con icono SVG y efecto hover -->
+                    <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300">
+                        <div class="text-petroleo mb-4 flex justify-center items-center">
+                            <!-- Icono de Negocio/Documento -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-10 w-10">
+                                <path d="M19 3H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM5 19V5h14l.002 14H5zm2-8h10v2H7v-2zm0 4h10v2H7v-2zm0-8h10v2H7V7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-poppins font-semibold text-xl mb-2">¿Quieres digitalizar tu negocio o proyecto?</h3>
+                        <p class="text-gris-azulado">Aprende a usar herramientas gratuitas para optimizar tu trabajo sin gastar una fortuna.</p>
+                    </div>
+                    <!-- Pregunta 3 con icono SVG (gráfico ascendente mejorado) y efecto hover -->
+                    <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 transform hover:scale-105 hover:shadow-lg transition-all duration-300">
+                        <div class="text-petroleo mb-4 flex justify-center items-center">
+                            <!-- Nuevo Icono de Gráfico Ascendente (más definido) -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-10 w-10">
+                                <path d="M2.27 18.39a1 1 0 00.32.74c.2.19.46.3.74.3h17.34a1 1 0 00.74-.32 1 1 0 00.32-.74V5.61a1 1 0 00-.32-.74 1 1 0 00-.74-.32H3.33a1 1 0 00-.74.32 1 1 0 00-.32.74v12.78zM4 6.47h16v11.06L4 6.47zm13.71 4.58l-5.38 5.38-2.6-2.6-5.46 5.46-1.41-1.41 6.87-6.87 2.6-2.6 5.38 5.38z"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-poppins font-semibold text-xl mb-2">¿Buscas ser más productivo y eficiente?</h3>
+                        <p class="text-gris-azulado">Descubre cómo la IA y la automatización pueden hacer las tareas repetitivas por ti.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Beneficios -->
+        <section id="beneficios" class="bg-gris-claro py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-poppins font-bold mb-4">Lo que aprenderás a hacer</h2>
+                    <p class="text-lg text-gris-azulado max-w-2xl mx-auto">Te enfocarás en habilidades prácticas que puedes aplicar de inmediato.</p>
+                </div>
+                <div class="max-w-3xl mx-auto">
+                    <ul class="space-y-4">
+                        <li class="flex items-start bg-white p-6 rounded-lg shadow-sm">
+                            <svg class="w-6 h-6 text-petroleo mr-4 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <div>
+                                <h4 class="font-bold text-lg">Crear formularios profesionales</h4>
+                                <p class="text-gris-azulado">Para registrar clientes, hacer encuestas o recopilar cualquier tipo de información de forma automática.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start bg-white p-6 rounded-lg shadow-sm">
+                            <svg class="w-6 h-6 text-petroleo mr-4 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <div>
+                                <h4 class="font-bold text-lg">Organizar datos como un experto</h4>
+                                <p class="text-gris-azulado">Usa hojas de cálculo (Google Sheets) para administrar finanzas, inventarios o listas de contactos sin esfuerzo.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start bg-white p-6 rounded-lg shadow-sm">
+                            <svg class="w-6 h-6 text-petroleo mr-4 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></path></svg>
+                            <div>
+                                <h4 class="font-bold text-lg">Presentar informes de impacto</h4>
+                                <p class="text-gris-azulado">Transforma datos aburridos en gráficos y paneles visuales (Looker Studio) que todos entiendan.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start bg-white p-6 rounded-lg shadow-sm">
+                            <svg class="w-6 h-6 text-petroleo mr-4 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <div>
+                                <h4 class="font-bold text-lg">Automatizar tareas con Inteligencia Artificial</h4>
+                                <p class="text-gris-azulado">Aprende a usar la IA para redactar correos, generar ideas y optimizar tu tiempo de forma sorprendente.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Contenido del curso (Semanas con iconos y sin acordeón) -->
+        <section id="contenido" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-poppins font-bold mb-4">Un camino claro, semana a semana</h2>
+                    <p class="text-lg text-gris-azulado max-w-2xl mx-auto">Este es el plan de 8 semanas que te convertirá en un experto digital.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Semana 1 -->
+                    <div class="bg-white rounded-lg shadow-md week-card">
+                        <div class="week-card-inner">
+                            <p class="font-bold text-petroleo mb-1">Semana 1</p>
+                            <h4 class="font-poppins font-semibold text-lg">Tu Ecosistema Digital con Google</h4>
+                            <div class="week-icon-container text-petroleo mt-4">
+                                <!-- Icono para Ecosistema Digital: Nube simple -->
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-12 w-12 mx-auto">
+                                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4C9.11 4 6.6 5.64 5.35 8.04C2.34 8.36 0 10.91 0 14C0 17.31 2.69 20 6 20H19C21.76 20 24 17.76 24 15C24 12.36 21.95 10.22 19.35 10.04ZM19 18H6C3.79 18 2 16.21 2 14C2 11.95 3.53 10.24 5.56 10.03L6.37 9.92L6.68 9.24C7.75 6.82 9.77 5.2 12 5.2C14.47 5.2 16.58 6.89 17.44 9.22L17.76 10.04L18.66 10.04C20.47 10.04 21.92 11.53 21.92 13.34C21.92 15.15 20.47 16.6 18.66 16.6H19V18Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Semana 2 -->
+                    <div class="bg-white rounded-lg shadow-md week-card">
+                        <div class="week-card-inner">
+                            <p class="font-bold text-petroleo mb-1">Semana 2</p>
+                            <h4 class="font-poppins font-semibold text-lg">Google Forms: Recopila Información sin Límites</h4>
+                            <div class="week-icon-container text-petroleo mt-4">
+                                <!-- Icono para Google Forms: Documento con check -->
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-12 w-12 mx-auto">
+                                    <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3ZM5 5H19V19H5V5ZM10.5 12.5L7 9L5.5 10.5L9 14L18.5 4.5L17 3L10.5 12.5Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Semana 3 -->
+                    <div class="bg-white rounded-lg shadow-md week-card">
+                        <div class="week-card-inner">
+                            <p class="font-bold text-petroleo mb-1">Semana 3</p>
+                            <h4 class="font-poppins font-semibold text-lg">Google Sheets Básico: Organiza tu Mundo</h4>
+                            <div class="week-icon-container text-petroleo mt-4">
+                                <!-- Icono para Google Sheets Básico: Cuadrícula simple -->
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-12 w-12 mx-auto">
+                                    <path d="M3 3H21V21H3V3ZM5 5V19H19V5H5ZM12 5V19H10V5H12ZM5 12H19V10H5V12Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Semana 4 -->
+                    <div class="bg-white rounded-lg shadow-md week-card">
+                        <div class="week-card-inner">
+                            <p class="font-bold text-petroleo mb-1">Semana 4</p>
+                            <h4 class="font-poppins font-semibold text-lg">Google Sheets Avanzado: Fórmulas que Trabajan para Ti</h4>
+                            <div class="week-icon-container text-petroleo mt-4">
+                                <!-- Icono para Google Sheets Avanzado: Cuadrícula con engranaje -->
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-12 w-12 mx-auto">
+                                    <path d="M3 3H21V21H3V3ZM5 5V19H19V5H5ZM12 5V19H10V5H12ZM5 12H19V10H5V12Z"/>
+                                    <path d="M12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Semana 5 -->
+                    <div class="bg-white rounded-lg shadow-md week-card">
+                        <div class="week-card-inner">
+                            <p class="font-bold text-petroleo mb-1">Semana 5</p>
+                            <h4 class="font-poppins font-semibold text-lg">Looker Studio: Crea Dashboards Impactantes</h4>
+                            <div class="week-icon-container text-petroleo mt-4">
+                                <!-- Icono para Looker Studio: Gráfico de barras simple -->
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-12 w-12 mx-auto">
+                                    <path d="M22 21H2V3H4V19H20V21H22ZM17 14H19V7H17V14ZM12 18H14V10H12V18ZM7 21H9V14H7V21Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Semana 6 -->
+                    <div class="bg-white rounded-lg shadow-md week-card">
+                        <div class="week-card-inner">
+                            <p class="font-bold text-petroleo mb-1">Semana 6</p>
+                            <h4 class="font-poppins font-semibold text-lg">Canva: Diseño Gráfico Fácil para No Diseñadores</h4>
+                            <div class="week-icon-container text-petroleo mt-4">
+                                <!-- Icono para Canva: Paleta de colores -->
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-12 w-12 mx-auto">
+                                    <path d="M12 3C7.58 3 4 6.58 4 11C4 13.06 4.8 14.95 6.09 16.34C5.9 16.58 5.72 16.82 5.56 17.06L4 20L7.09 18.25L7.38 18.08C8.58 18.77 9.98 19.14 11.44 19.2C12.89 19.26 14.33 19.04 15.68 18.52C16.96 18 18.08 17.18 19 16.14C20.42 14.59 21.16 12.63 21.05 10.61C20.94 8.59 19.98 6.71 18.5 5.23C16.83 3.56 14.5 2.65 12 2.65V3ZM12 5C14.76 5 17 7.24 17 10V11H15V8H13V11H11V8H9V11H7V8H5V10C5 7.79 6.79 6 9 6H12Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Semana 7 -->
+                    <div class="bg-white rounded-lg shadow-md week-card">
+                        <div class="week-card-inner">
+                            <p class="font-bold text-petroleo mb-1">Semana 7</p>
+                            <h4 class="font-poppins font-semibold text-lg">Introducción a la IA: Tu Asistente Personal</h4>
+                            <div class="week-icon-container text-petroleo mt-4">
+                                <!-- Icono para IA: Cerebro con circuito -->
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-12 w-12 mx-auto">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM15 17H9C8.44772 17 8 16.5523 8 16V8C8 7.44772 8.44772 7 9 7H15C15.5523 7 16 7.44772 16 8V16C16 16.5523 15.5523 17 15 17ZM12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Semana 8 -->
+                    <div class="bg-white rounded-lg shadow-md week-card">
+                        <div class="week-card-inner">
+                            <p class="font-bold text-petroleo mb-1">Semana 8</p>
+                            <h4 class="font-poppins font-semibold text-lg">Proyecto Final: Integrando tus Nuevas Habilidades</h4>
+                            <div class="week-icon-container text-petroleo mt-4">
+                                <!-- Icono para Proyecto Final: Pieza de rompecabezas completada -->
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-12 w-12 mx-auto">
+                                    <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM10.5 17L6 12.5L7.5 11L10.5 14L16.5 8L18 9.5L10.5 17Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nueva Sección: Botón Solicita tu Demo -->
+        <section class="bg-white py-10 md:py-16 text-center">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-poppins font-bold text-gris-oscuro mb-8">
+                    ¿Listo para potenciar tu talento?
+                </h2>
+                <a href="#contacto" class="bg-petroleo text-white font-bold font-poppins py-4 px-12 rounded-full inline-block shadow-lg hover:bg-opacity-90 transform hover:-translate-y-1 transition-all duration-300 text-xl">
+                    Solicita tu Demo
+                </a>
+            </div>
+        </section>
+
+        <!-- 5. Testimonios -->
+        <section id="testimonios" class="bg-gris-claro py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-poppins font-bold mb-4">No tienes que creernos a nosotros</h2>
+                    <p class="text-lg text-gris-azulado max-w-2xl mx-auto">Mira lo que dicen nuestros alumnos.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <!-- Testimonio 1 (Placeholder) -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <p class="text-gris-azulado mb-4">"Este curso me quitó el miedo a la tecnología. Ahora administro mi pequeño negocio de forma mucho más eficiente y profesional. ¡Totalmente recomendado!"</p>
+                        <p class="font-bold font-poppins">- Ana G., 52 años, Emprendedora</p>
+                    </div>
+                    <!-- Testimonio 2 (Placeholder) -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <p class="text-gris-azulado mb-4">"Pensé que ya sabía usar estas herramientas, pero el curso me enseñó trucos de automatización que me ahorran horas de trabajo a la semana. Increíble."</p>
+                        <p class="font-bold font-poppins">- Carlos M., 31 años, Administrador</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Precio e Inscripción -->
+        <section id="precio" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-center border border-petroleo">
+                    <h2 class="text-3xl md:text-4xl font-poppins font-bold mb-2">Acceso completo al curso</h2>
+                    <p class="text-lg text-gris-azulado mb-6">Un solo pago para transformar tus habilidades para siempre.</p>
+                    <div class="text-5xl md:text-6xl font-poppins font-bold text-petroleo mb-6">
+                        $4999 <span class="text-2xl text-gris-azulado">MXN</span>
+                    </div>
+                    <ul class="text-left max-w-sm mx-auto space-y-2 mb-8 text-gris-azulado">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Acceso a clases grabadas</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> 8 módulos de contenido</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Certificado de finalización</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg> Acceso a comunidad privada</li>
+                    </ul>
+                    <a href="#" class="bg-petroleo text-white font-bold font-poppins py-4 px-10 rounded-full inline-block shadow-lg w-full hover:bg-opacity-90 transform hover:-translate-y-1 transition-all duration-300">
+                        Inscribirme y Empezar a Aprender
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Preguntas Frecuentes (FAQ) -->
+        <section id="faq" class="bg-gris-claro py-16 md:py-24">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-poppins font-bold mb-4">¿Tienes dudas?</h2>
+                    <p class="text-lg text-gris-azulado">Aquí resolvemos las más comunes.</p>
+                </div>
+                <div class="space-y-4">
+                    <!-- Pregunta 1 -->
+                    <div class="bg-white rounded-lg shadow-sm collapsible-container">
+                        <button class="collapsible-question w-full flex justify-between items-center text-left p-6 font-semibold text-lg">
+                            <span>¿Necesito tener experiencia previa?</span>
+                            <svg class="collapsible-arrow w-6 h-6 text-petroleo flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="collapsible-answer px-6 pb-6 text-gris-azulado">
+                            <p>No, en absoluto. El curso está diseñado desde cero, pensando en personas que tienen conocimientos básicos o nulos. Te guiaremos paso a paso.</p>
+                        </div>
+                    </div>
+                    <!-- Pregunta 2 -->
+                    <div class="bg-white rounded-lg shadow-sm collapsible-container">
+                        <button class="collapsible-question w-full flex justify-between items-center text-left p-6 font-semibold text-lg">
+                            <span>¿Las herramientas que se usan son de pago?</span>
+                            <svg class="collapsible-arrow w-6 h-6 text-petroleo flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="collapsible-answer px-6 pb-6 text-gris-azulado">
+                            <p>No. Nos enfocamos exclusivamente en herramientas poderosas y gratuitas como las de Google (Forms, Sheets, Looker Studio), Canva y versiones de IA de libre acceso. No tendrás que gastar nada extra.</p>
+                        </div>
+                    </div>
+                    <!-- Pregunta 3 -->
+                    <div class="bg-white rounded-lg shadow-sm collapsible-container">
+                        <button class="collapsible-question w-full flex justify-between items-center text-left p-6 font-semibold text-lg">
+                            <span>¿Cuánto tiempo tengo para completar el curso?</span>
+                            <svg class="collapsible-arrow w-6 h-6 text-petroleo flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="collapsible-answer px-6 pb-6 text-gris-azulado">
+                            <p>El acceso es de por vida. Aunque el contenido está estructurado en 8 semanas, puedes tomarte todo el tiempo que necesites y volver a consultar las lecciones cuando quieras.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Formulario de Contacto -->
+        <section id="contacto" class="py-16 md:py-24">
+            <div class="container mx-auto px-6 max-w-2xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-poppins font-bold mb-4">¿Algo más en qué podamos ayudarte?</h2>
+                    <p class="text-lg text-gris-azulado">Envíanos un mensaje y te responderemos lo antes posible.</p>
+                </div>
+                <!-- Cuadrante del formulario con color claro -->
+                <div class="bg-gris-claro rounded-2xl shadow-xl p-8 md:p-12 border border-gris-claro">
+                    <form action="#" method="POST" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gris-oscuro mb-2">Tu Nombre</label>
+                            <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-petroleo focus:border-petroleo" placeholder="Escribe tu nombre completo" required>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gris-oscuro mb-2">Tu Correo Electrónico</label>
+                            <input type="email" id="email" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-petroleo focus:border-petroleo" placeholder="ejemplo@correo.com" required>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gris-oscuro mb-2">Tu Mensaje</label>
+                            <textarea id="message" name="message" rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-petroleo focus:border-petroleo" placeholder="Escribe tu consulta aquí..." required></textarea>
+                        </div>
+                        <button type="submit" class="bg-petroleo text-white font-bold font-poppins py-3 px-8 rounded-full inline-block shadow-lg w-full hover:bg-opacity-90 transform hover:-translate-y-1 transition-all duration-300">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de Página -->
+    <footer class="bg-gris-oscuro py-12">
+        <div class="container mx-auto px-6 text-center text-white">
+            <!-- Nuevo Logo en el pie de página -->
+            <div class="inline-block mb-8">
+                <img src="https://github.com/juanbls100/reinux/blob/main/Untitled%20(1000%20x%20500%20px).png?raw=true" alt="Nuevo Logo de Reinux" class="h-16 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/200x60/007C80/FFFFFF?text=Nuevo+Logo';" />
+            </div>
+            <p class="text-gris-claro mb-4">Potenciando tu talento en la era digital.</p>
+            <p class="text-sm text-gris-azulado">&copy; 2024 Reinux. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // JavaScript para los elementos desplegables (Solo FAQ)
+            const collapsibleQuestions = document.querySelectorAll('#faq .collapsible-question');
+
+            collapsibleQuestions.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answer = button.nextElementSibling;
+                    const arrow = button.querySelector('.collapsible-arrow');
+                    const parentContainer = button.closest('.collapsible-container'); 
+
+                    // Si la respuesta ya está abierta, ciérrala
+                    if (answer.classList.contains('open')) {
+                        answer.classList.remove('open');
+                        arrow.classList.remove('rotated');
+                        parentContainer.classList.remove('open'); 
+                    } else {
+                        // Cierra otras respuestas abiertas del mismo grupo
+                        document.querySelectorAll('#faq .collapsible-container').forEach(otherContainer => {
+                            const otherButton = otherContainer.querySelector('.collapsible-question');
+                            if (otherContainer !== parentContainer && otherButton) {
+                                const otherAnswer = otherButton.nextElementSibling;
+                                const otherArrow = otherButton.querySelector('.collapsible-arrow');
+                                if (otherAnswer && otherAnswer.classList.contains('open')) {
+                                    otherAnswer.classList.remove('open');
+                                    otherArrow.classList.remove('rotated');
+                                    otherContainer.classList.remove('open');
+                                }
+                            }
+                        });
+
+                        // Abre la respuesta actual
+                        answer.classList.add('open');
+                        arrow.classList.add('rotated');
+                        parentContainer.classList.add('open'); 
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
